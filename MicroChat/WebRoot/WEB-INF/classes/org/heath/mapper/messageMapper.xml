@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.heath.mapper.MessageMapper">
+
+	<resultMap type="message" id="messageMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="fromAccount" column="from_account" />
+		<result property="content" column="content" />
+		<result property="sendTime" column="send_time" />
+		<result property="state" column="state" />
+		<result property="messageType" column="message_type" />
+		<result property="duration" column="duration" />
+		<result property="sessionType" column="session_type" />
+		<result property="width" column="width" />
+		<result property="height" column="height" />
+	</resultMap>
+
+	<select id="queryAllUnreadMessageCount" parameterType="String"
+		resultType="int">
+		select count(*) from message where state = 0 and
+		from_account = #{account}
+	</select>
+
+	<select id="queryUnreadMessageCountByAccount" parameterType="Map"
+		resultType="int">
+		select count(*) from message where state = 0 and
+		from_account = #{account} and account = #{fromAccount}
+	</select>
+
+
+	<insert id="addMessageInfo" parameterType="message">
+		insert into
+		message(account,from_account,content,send_time,message_type,duration,session_type,width,height)
+		values(#{account},#{fromAccount},#{content},now(),#{messageType},#{duration},#{sessionType},#{width},#{height})
+	</insert>
+
+	<select id="queryMessage" parameterType="map" resultMap="messageMap">
+		select * from message
+		<if test="accurateType!=null and accurateType==1">
+			<where>
+				<if test="account!=null and account.length()>0">
+					and (account like "%${account}%" or from_account like
+					"%${account}%")
+				</if>
+				<if test="content!=null and content.length()>0">
+					and content like "%${content}%"
+				</if>
+				<if test="messageType!=null and messageType.length()>0">
+					and message_type=#{messageType}
+				</if>
+				<if test="sessionType!=null and sessionType.length()>0">
+					and session_type=#{sessionType}
+				</if>
+				<if test="sendTime!=null and sendTime.length()>0">
+					and send_time like "%${sendTime}%"
+				</if>
+			</where>
+		</if>
+		<if test="accurateType!=null and accurateType==2">
+			<where>
+				<if test="account!=null and account.length()>0">
+					and (account=#{account} or from_account=#{account})
+				</if>
+				<if test="content!=null and content.length()>0">
+					and content=#{content}
+				</if>
+				<if test="messageType!=null and messageType.length()>0">
+					and message_type=#{messageType}
+				</if>
+				<if test="sessionType!=null and sessionType.length()>0">
+					and session_type=#{sessionType}
+				</if>
+				<if test="sendTime!=null and sendTime.length()>0">
+					and send_time=#{sendTime}
+				</if>
+			</where>
+		</if>
+		order by id desc limit ${start},${pageSize}
+	</select>
+
+	<select id="queryMessageCount" parameterType="map" resultType="int">
+		select count(*) from message
+		<if test="accurateType!=null and accurateType == 1">
+			<where>
+				<if test="account!=null and account.length()>0">
+					and (account like "%${account}%" or from_account like
+					"%${account}%")
+				</if>
+				<if test="content!=null and content.length()>0">
+					and content like "%${content}%"
+				</if>
+				<if test="messageType!=null and messageType.length()>0">
+					and message_type=#{messageType}
+				</if>
+				<if test="sessionType!=null and sessionType.length()>0">
+					and session_type=#{sessionType}
+				</if>
+				<if test="sendTime!=null and sendTime.length()>0">
+					and send_time like "%${sendTime}%"
+				</if>
+			</where>
+		</if>
+		<if test="accurateType!=null and accurateType == 2">
+			<where>
+				<if test="account!=null and account.length()>0">
+					and (account=#{account} or from_account=#{account})
+				</if>
+				<if test="content!=null and content.length()>0">
+					and content=#{content}
+				</if>
+				<if test="messageType!=null and messageType.length()>0">
+					and message_type=#{messageType}
+				</if>
+				<if test="sessionType!=null and sessionType.length()>0">
+					and session_type=#{sessionType}
+				</if>
+				<if test="sendTime!=null and sendTime.length()>0">
+					and send_time=#{sendTime}
+				</if>
+			</where>
+		</if>
+	</select>
+
+</mapper>

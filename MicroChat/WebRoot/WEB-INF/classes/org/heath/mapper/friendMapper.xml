@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.heath.mapper.FriendMapper">
+
+	<resultMap type="HashMap" id="friendsRelationshipHashMap">
+		<id property="id" column="id" />
+		<result property="state" column="state" />
+		<result property="content" column="content" />
+		<result property="account" column="account" />
+		<result property="icon" column="icon" />
+		<result property="sign" column="sign" />
+		<result property="email" column="email" />
+		<result property="birth" column="birth" />
+		<result property="mobile" column="mobile" />
+		<result property="gender" column="gender" />
+		<result property="nickname" column="nickname" />
+		<result property="ex" column="ex" />
+	</resultMap>
+	<resultMap type="HashMap" id="RecentSessionHashMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="fromAccount" column="from_account" />
+		<result property="icon" column="icon" />
+		<result property="sign" column="sign" />
+		<result property="email" column="email" />
+		<result property="birth" column="birth" />
+		<result property="mobile" column="mobile" />
+		<result property="gender" column="gender" />
+		<result property="nickname" column="nickname" />
+		<result property="ex" column="ex" />
+		<result property="remarks" column="remarks" />
+		<association property="messageCount" javaType="int" select="org.heath.mapper.MessageMapper.queryUnreadMessageCountByAccount" column="{account=account,fromAccount=from_account}">
+		</association>
+	</resultMap>
+	
+	<resultMap type="HashMap" id="friendsHashMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="fromAccount" column="from_account" />
+		<result property="icon" column="icon" />
+		<result property="sign" column="sign" />
+		<result property="email" column="email" />
+		<result property="birth" column="birth" />
+		<result property="mobile" column="mobile" />
+		<result property="gender" column="gender" />
+		<result property="nickname" column="nickname" />
+		<result property="ex" column="ex" />
+		<result property="remarks" column="remarks" />
+	</resultMap>
+	<resultMap type="HashMap" id="friendsHashLazyLoadingMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="fromAccount" column="from_account" />
+		<result property="remarks" column="remarks" />
+		<association property="userInfo" javaType="userInfo"
+			select="org.heath.mapper.UserMapper.queryMyInfo" column="from_account">
+		</association>
+	</resultMap>
+
+
+
+
+	<select id="queryFriends" parameterType="String" resultType="userInfo">
+		select * from userinfo where account like "%${value}%" or
+		nickname like "%${value}%" limit 0,50
+	</select>
+
+	<select id="checkFriends" parameterType="FriendsRelationship" resultType="int">
+		select count(*) from friends_relationship where account = #{account}
+		and from_account = #{fromAccount} and state = 0
+	</select>
+
+	<insert id="addFriendRelationship" parameterType="FriendsRelationship">
+		insert into
+		friends_relationship(account,from_account,content)
+		values(#{account},#{fromAccount},#{content})
+	</insert>
+
+	<update id="modifyFriendRelationship" parameterType="FriendsRelationship">
+		update friends_relationship set content = #{content} where account =
+		#{account} and from_account = #{fromAccount} and state = 0
+	</update>
+
+	<select id="queryReqAddNums" parameterType="String" resultType="int">
+		select count(*) from friends_relationship where account = #{account}
+		and state = 0
+	</select>
+
+	<select id="queryFriendsNotice" parameterType="String"
+		resultMap="friendsRelationshipHashMap">
+		select
+		fr.id,fr.account,fr.content,fr.state,ui.account fromAccount,ui.icon,ui.sign,ui.email,ui.birth,ui.mobile,ui.gender,ui.nickname,ui.ex
+		from friends_relationship fr,userinfo ui where fr.account = #{account}
+		and fr.from_account = ui.account
+	</select>
+	
+	<update id="modifyFriendRelationshipState" parameterType="FriendsRelationship">
+		update friends_relationship set state = #{state} where ((account = #{account} and from_account = #{fromAccount}) or (account = #{fromAccount} and from_account = #{account})) and state = 0
+	</update>
+	
+	<insert id="addFriend" parameterType="FriendsRelationship">
+		insert into friends(account,from_account) values(#{account},#{fromAccount}),(#{fromAccount},#{account})
+	</insert>
+	
+	<!-- <select id="queryAllFriends" parameterType="String"
+		resultMap="friendsHashMap">
+		select
+		f.remarks,f.account,ui.account from_account,ui.icon,ui.sign,ui.email,ui.birth,ui.mobile,ui.gender,ui.nickname,ui.ex
+		from friends f,userinfo ui where f.account = #{account}
+		and f.from_account = ui.account and state = 1
+	</select> -->
+	<select id="queryAllFriends" parameterType="String"
+		resultMap="friendsHashLazyLoadingMap">
+		select * from friends where account = #{account} and state=1
+	</select>
+	
+	<select id="queryFriendInfoByAccount" parameterType="FriendsRelationship"
+		resultMap="friendsHashMap">
+		select
+		f.remarks,f.account,ui.account from_account,ui.icon,ui.sign,ui.email,ui.birth,ui.mobile,ui.gender,ui.nickname,ui.ex
+		from friends f,userinfo ui where f.account = #{account} and f.from_account = #{fromAccount}
+		and f.from_account = ui.account and state = 1
+	</select>
+	
+	<update id="modifyFriendRemarks" parameterType="friend">
+		update friends set remarks = #{remarks} where account = #{account} and from_account = #{fromAccount} and state = 1
+	</update>
+	
+	<update id="delFriend" parameterType="friend">
+		update friends set state = 0 where ((account = #{account} and from_account = #{fromAccount}) or (account = #{fromAccount} and from_account = #{account})) and state = 1
+	</update>
+	
+</mapper>

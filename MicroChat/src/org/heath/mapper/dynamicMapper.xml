@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.heath.mapper.DynamicMapper">
+
+	<resultMap type="dynamic" id="dynamicLazyLoadingMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="type" column="type" />
+		<result property="content" column="content" />
+		<result property="path" column="path" />
+		<result property="releaseTime" column="release_time" />
+		<result property="praiseNums" column="praise_nums" />
+		<result property="state" column="state" />
+		<association property="userInfo" javaType="userInfo"
+			select="org.heath.mapper.UserMapper.queryMyInfo" column="account">
+		</association>
+		<collection property="follows"
+			select="org.heath.mapper.DynamicMapper.queryFollowByAccount" column="account" />
+		<collection property="praises"
+			select="org.heath.mapper.DynamicMapper.queryPraiseByDynamicId"
+			column="id" />
+		<collection property="commentReplys"
+			select="org.heath.mapper.DynamicMapper.queryCommentReplyByDynamicId"
+			column="id" />
+	</resultMap>
+	<resultMap type="commentReply" id="commentReplyMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="accountNickname" column="account_nickname" />
+		<result property="dynamicId" column="dynamic_id" />
+		<result property="beAccount" column="be_account" />
+		<result property="beAccountNickname" column="be_account_nickname" />
+		<result property="content" column="content" />
+		<result property="type" column="type" />
+		<result property="time" column="time" />
+		<result property="state" column="state" />
+	</resultMap>
+	<resultMap type="follow" id="followMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="followAccount" column="follow_account" />
+		<result property="followTime" column="follow_time" />
+		<result property="state" column="state" />
+	</resultMap>
+	<resultMap type="praise" id="praiseMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="dynamicId" column="dynamic_id" />
+		<result property="praiseTime" column="praise_time" />
+		<result property="state" column="state" />
+	</resultMap>
+
+	<insert id="release" parameterType="dynamic">
+		insert into
+		dynamic(account,type,content,path,release_time,praise_nums,state)
+		values(#{account},#{type},#{content},#{path},now(),0,1)
+	</insert>
+
+	<select id="queryDynamicByAccount" parameterType="map"
+		resultMap="dynamicLazyLoadingMap">
+		select * from dynamic
+		<where>
+			<if test="accounts!=null">
+				account in
+				<foreach collection="accounts" index="index" item="account"
+					open="(" separator="," close=")">
+					#{account}
+				</foreach>
+			</if>
+			<if test="state!=null and state != ''">
+				and state=#{state}
+			</if>
+			<if test="type!=null and type != ''">
+				and type=#{type}
+			</if>
+			<if test="ssid!=null and ssid != ''">
+				and id <![CDATA[ <= ]]>
+				${ssid}
+			</if>
+			<if test="sid!=null and sid != ''">
+				and id <![CDATA[ > ]]>
+				${sid}
+			</if>
+			<if test="eid!=null and eid != ''">
+				and id <![CDATA[ < ]]>
+				${eid}
+			</if>
+		</where>
+		order by id desc limit 10
+	</select>
+
+	<select id="queryFollowByAccount" parameterType="String"
+		resultMap="followMap">
+		select * from follow where follow_account = #{account} and state=1
+	</select>
+
+	<select id="queryPraiseByDynamicId" parameterType="String"
+		resultMap="praiseMap">
+		select * from praise where dynamic_id = #{dynamicId} and
+		state=1
+	</select>
+
+	<select id="queryCommentReplyByDynamicId" parameterType="String"
+		resultMap="commentReplyMap">
+		select * from comment_reply where dynamic_id = #{dynamicId}
+		and state=1
+	</select>
+
+	<select id="queryDynamicById" parameterType="map"
+		resultMap="dynamicLazyLoadingMap">
+		select * from dynamic where id = #{id}
+	</select>
+
+	<select id="queryPraiseByDynamicIdAndAccount" parameterType="praise"
+		resultType="string">
+		select state from praise where dynamic_id = #{dynamicId}
+		and account = #{account}
+	</select>
+
+	<insert id="addPraise" parameterType="praise">
+		insert into
+		praise(account,dynamic_id,praise_time,state)
+		values(#{account},#{dynamicId},now(),1)
+	</insert>
+
+	<update id="modifyPraiseByDynamicIdAndAccount" parameterType="praise">
+		update praise set
+		state = #{state} where dynamic_id = #{dynamicId} and
+		account = #{account}
+	</update>
+	
+	<select id="queryFollowByFollowAccountAndAccount" parameterType="follow"
+		resultType="string">
+		select state from follow where follow_account = #{followAccount}
+		and account = #{account}
+	</select>
+	
+	<select id="queryFollowAccountByAccount" parameterType="string"
+		resultType="string">
+		select follow_account from follow where account = #{account} and state = 1
+	</select>
+	
+	<insert id="addFollow" parameterType="follow">
+		insert into
+		follow(account,follow_account,follow_time,state)
+		values(#{account},#{followAccount},now(),1)
+	</insert>
+	
+	<update id="modifyFollowByFollowAccountAndAccount" parameterType="follow">
+		update follow set
+		state = #{state} where follow_account = #{followAccount} and
+		account = #{account}
+	</update>
+
+	<update id="quantityPraiseNum" parameterType="dynamic">
+		update dynamic set
+		praise_nums = praise_nums${praiseNums} where id = #{id}
+	</update>
+
+	<insert id="addCommentReply" parameterType="commentReply">
+		insert into
+		comment_reply(dynamic_id,account,account_nickname,be_account,be_account_nickname,content,type,time,state)
+		values(#{dynamicId},#{account},#{accountNickname},#{beAccount},#{beAccountNickname},#{content},#{type},now(),1)
+	</insert>
+
+	<select id="queryAllFriendsAccount" parameterType="String"
+		resultType="string">
+		select from_account from friends where account = #{account}
+		and state=1
+	</select>
+
+	<select id="queryCommentReplyNums" parameterType="map"
+		resultType="string">
+		select count(*) from comment_reply
+		<where>
+			<if test="dynamicIds!=null">
+				dynamic_id in
+				<foreach collection="dynamicIds" index="index" item="dynamicId"
+					open="(" separator="," close=")">
+					#{dynamicId}
+				</foreach>
+			</if>
+			<if test="state!=null and state != ''">
+				and state=#{state}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryPraiseNums" parameterType="map" resultType="string">
+		select count(*) from praise
+		<where>
+			<if test="dynamicIds!=null">
+				dynamic_id in
+				<foreach collection="dynamicIds" index="index" item="dynamicId"
+					open="(" separator="," close=")">
+					#{dynamicId}
+				</foreach>
+			</if>
+			<if test="state!=null and state != ''">
+				and state=#{state}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryDynamicNums" parameterType="map" resultType="string">
+		select id from dynamic where account = #{account} and state = 1
+	</select>
+	<select id="queryDynamicNums1" parameterType="map" resultType="int">
+		select count(*) from dynamic where account = #{account} and state = 1
+	</select>
+
+	<select id="queryFollowNums" parameterType="map" resultType="string">
+		select count(*) from follow where follow_account = #{account} and
+		state = 1
+	</select>
+	
+	<select id="queryDynamic" parameterType="map" resultMap="dynamicLazyLoadingMap">
+		select * from dynamic
+		<if test="accurateType!=null and accurateType==1">
+			<where>
+				<if test="account!=null and account.length()>0">
+					and account like "%${account}%"
+				</if>
+				<if test="content!=null and content.length()>0">
+					and content like "%${content}%"
+				</if>
+				<if test="dynamicType!=null and dynamicType.length()>0">
+					and type=#{dynamicType}
+				</if>
+				<if test="sendTime!=null and sendTime.length()>0">
+					and send_time like "%${sendTime}%"
+				</if>
+			</where>
+		</if>
+		<if test="accurateType!=null and accurateType==2">
+			<where>
+				<if test="account!=null and account.length()>0">
+					and account=#{account}
+				</if>
+				<if test="content!=null and content.length()>0">
+					and content=#{content}
+				</if>
+				<if test="dynamicType!=null and dynamicType.length()>0">
+					and type=#{dynamicType}
+				</if>
+				<if test="sendTime!=null and sendTime.length()>0">
+					and send_time=#{sendTime}
+				</if>
+			</where>
+		</if>
+		order by id desc limit ${start},${pageSize}
+	</select>
+
+	<select id="queryDynamicCount" parameterType="map" resultType="int">
+		select count(*) from dynamic
+		<if test="accurateType!=null and accurateType==1">
+			<where>
+				<if test="account!=null and account.length()>0">
+					and account like "%${account}%"
+				</if>
+				<if test="content!=null and content.length()>0">
+					and content like "%${content}%"
+				</if>
+				<if test="dynamicType!=null and dynamicType.length()>0">
+					and type=#{dynamicType}
+				</if>
+				<if test="sendTime!=null and sendTime.length()>0">
+					and send_time like "%${sendTime}%"
+				</if>
+			</where>
+		</if>
+		<if test="accurateType!=null and accurateType==2">
+			<where>
+				<if test="account!=null and account.length()>0">
+					and account=#{account}
+				</if>
+				<if test="content!=null and content.length()>0">
+					and content=#{content}
+				</if>
+				<if test="dynamicType!=null and dynamicType.length()>0">
+					and type=#{dynamicType}
+				</if>
+				<if test="sendTime!=null and sendTime.length()>0">
+					and send_time=#{sendTime}
+				</if>
+			</where>
+		</if>
+	</select>
+	
+	<update id="delDynamic" parameterType="string">
+		update dynamic set state = 0 where id = #{id}
+	</update>
+
+</mapper>

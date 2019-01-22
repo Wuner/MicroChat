@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+    
+    <!-- 加载db.properties文件 -->
+    <bean id="config" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>
+                    classpath:db.properties
+                </value>
+            </array>
+        </property>
+    </bean>
+    <!-- 配置数据库相关信息（替代mybatis的配置文件conf.xml） -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    	<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+    	<property name="maxActive" value="${maxActive}"></property>
+    	<property name="maxIdle" value="${maxIdle}"></property>
+    </bean>
+    
+    <!-- 在springIOC容器中创建mybatis的核心类SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描mapping.xml文件 -->
+		<property name="mapperLocations" value="classpath:org/heath/mapper/*.xml"></property>
+		<!-- 批量配置别名：以下会自动将包中的所有类批量定义别名，别名使用时，不区分大小写 -->
+		<property name="typeAliasesPackage" value="org.heath.entity"></property>
+    </bean>
+	<!-- 通过Mapper扫描器MapperScannerConfigurer，批量将 basePackage指定包中的DAO接口全部生成Mapper动态代理对象 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="org.heath.mapper"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	
+	
+    <bean id="userServiceImpl" class="org.heath.service.impl.UserServiceImpl">
+    	<property name="userMapper" ref="userMapper"></property>
+    </bean>
+    <bean id="friendServiceImpl" class="org.heath.service.impl.FriendServiceImpl">
+    	<property name="friendMapper" ref="friendMapper"></property>
+    </bean>
+    <bean id="messageServiceImpl" class="org.heath.service.impl.MessageServiceImpl">
+    	<property name="messageMapper" ref="messageMapper"></property>
+    </bean>
+    <bean id="teamServiceImpl" class="org.heath.service.impl.TeamServiceImpl">
+    	<property name="teamMapper" ref="teamMapper"></property>
+    </bean>
+    <bean id="dynamicServiceImpl" class="org.heath.service.impl.DynamicServiceImpl">
+    	<property name="dynamicMapper" ref="dynamicMapper"></property>
+    </bean>
+</beans>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.heath.mapper.TeamMapper">
+
+	<resultMap type="teamRelationship" id="teamRelationshipLazyLoadingMap">
+		<id property="id" column="id" />
+		<result property="tid" column="tid" />
+		<result property="inviter" column="inviter" />
+		<result property="beinviter" column="beinviter" />
+		<result property="msg" column="msg" />
+		<result property="state" column="state" />
+		<result property="delState" column="del_state" />
+		<result property="readState" column="read_state" />
+		<result property="type" column="type" />
+		<association property="userInfo" javaType="userInfo"
+			select="org.heath.mapper.UserMapper.queryTeamUserInfo" column="{inviter=inviter,beinviter=beinviter,type=type}">
+		</association>
+		<association property="team" javaType="team"
+			select="org.heath.mapper.TeamMapper.queryTeamInfoByTid" column="tid">
+		</association>
+	</resultMap>
+
+	<insert id="addTeam" parameterType="team">
+		insert into team
+		values(#{tid},#{tname},#{owner},#{members},#{announcement},#{intro},#{msg},#{magree},#{joinmode},#{custom},#{icon},#{beinvitemode},#{invitemode},#{uptinfomode},#{upcustommode},#{teamMemberLimit})
+	</insert>
+
+	<insert id="invitation" parameterType="list">
+		insert into team_relationship(tid,inviter,beinviter,msg,state,type)
+		values
+		<foreach collection="list" item="TeamRelationship" index="index"
+			separator=",">
+			(#{TeamRelationship.tid},#{TeamRelationship.inviter},#{TeamRelationship.beinviter},#{TeamRelationship.msg},#{TeamRelationship.state},#{TeamRelationship.type})
+		</foreach>
+	</insert>
+
+	<insert id="applyJoinTeam" parameterType="TeamRelationship">
+		insert into
+		team_relationship(tid,inviter,beinviter,msg,state,type)
+		values(#{tid},#{inviter},#{beinviter},#{msg},#{state},#{type})
+	</insert>
+
+	<insert id="addTeamMember" parameterType="list">
+		insert into
+		team_member(tid,account,extension,join_time,team_nick,type,is_in_team,is_mute)
+		values
+		<foreach collection="list" item="TeamMember" index="index"
+			separator=",">
+			(#{TeamMember.tid},#{TeamMember.account},#{TeamMember.extension},#{TeamMember.joinTime},#{TeamMember.teamNick},#{TeamMember.type},#{TeamMember.isInTeam},#{TeamMember.isMute})
+		</foreach>
+	</insert>
+
+	<select id="queryTeamMemberByTid" parameterType="String"
+		resultType="String">
+		select members from team where tid = #{tid}
+	</select>
+
+	<update id="modifyTeamMemberByTid" parameterType="object">
+		update team set
+		members = #{members} where tid = #{tid}
+	</update>
+
+	<update id="modifyTeamMemberByTidAndAccount" parameterType="TeamMember">
+		update team_member
+		<set>
+			<if test="teamNick != null and teamNick.length()>0">team_nick = #{teamNick},</if>
+			<if test="type != null and type.length()>0">type = #{type},</if>
+			<if test="isMute != null and isMute.length()>0">is_mute = #{isMute},</if>
+		</set>
+		where account in (${account})
+		and tid = #{tid}
+	</update>
+
+	<delete id="delTeamMemberByTidAndAccount" parameterType="object">
+		delete
+		from team_member where tid = #{tid} and account = #{account}
+	</delete>
+
+	<update id="modifyTeamByTid" parameterType="Team">
+		update team
+		<set>
+			<if test="tname != null and tname.length()>0">tname = #{tname},</if>
+			<if test="owner != null and owner.length()>0">owner = #{owner},</if>
+			<if test="announcement != null and announcement.length()>0">announcement = #{announcement},</if>
+			<if test="intro != null and intro.length()>0">intro = #{intro},</if>
+			<if test="joinmode != null and joinmode.length()>0">joinmode = #{joinmode},</if>
+			<if test="custom != null and custom.length()>0">custom = #{custom},</if>
+			<if test="icon != null and icon.length()>0">icon = #{icon},</if>
+			<if test="beinvitemode != null and beinvitemode.length()>0">beinvitemode = #{beinvitemode},</if>
+			<if test="invitemode != null and invitemode.length()>0">invitemode = #{invitemode},</if>
+			<if test="uptinfomode != null and uptinfomode.length()>0">uptinfomode = #{uptinfomode},</if>
+			<if test="upcustommode != null and upcustommode.length()>0">upcustommode = #{upcustommode},</if>
+			<if test="teamMemberLimit != null and teamMemberLimit.length()>0">teamMemberLimit = #{teamMemberLimit},</if>
+		</set>
+		where tid = #{tid}
+	</update>
+
+	<select id="queryTeamInfoByTid" parameterType="String"
+		resultType="team">
+		select * from team where tid = #{tid}
+	</select>
+
+	<select id="queryTeams" parameterType="String" resultType="team">
+		select * from team where tid like "%${value}%" or
+		tname like
+		"%${value}%" limit 0,50
+	</select>
+
+	<select id="queryTeamRelationshipByTidAndMore" parameterType="teamRelationship"
+		resultType="int">
+		select count(*) from team_relationship where tid = #{tid}
+		and beinviter = #{beinviter} and type=#{type} and state = #{state}
+	</select>
+
+	<update id="modifyApplyJoinTeam" parameterType="TeamRelationship">
+		update
+		team_relationship set tid = #{tid},beinviter =
+		#{beinviter},msg =
+		#{msg},state = #{state},type = #{type},read_state=0,del_state=0 where
+		tid =
+		#{tid} and beinviter = #{beinviter} and type=#{type} and state =
+		#{state}
+	</update>
+
+	<select id="queryTeamRelationshipNoticeNumByAccount"
+		parameterType="string" resultType="int">
+		select count(*) from
+		team_relationship where (inviter like '%"${value}"%' or (beinviter =
+		${value} and INSTR(inviter,'[')=0)) and read_state = 0 and del_state=0
+	</select>
+
+	<select id="queryTeamRelationshipNoticeByAccount" parameterType="string"
+		resultMap="teamRelationshipLazyLoadingMap">
+		select * from team_relationship where (inviter like
+		'%"${value}"%' or (beinviter = ${value} and INSTR(inviter,'[')=0))
+		order by id desc
+	</select>
+
+	<update id="modifyTeamRelationshipById" parameterType="teamRelationship">
+		update team_relationship
+		<set>
+			<if test="state != null and state.length()>0">state = #{state},</if>
+			<if test="delState != null and delState.length()>0">del_state = #{delState},</if>
+			<if test="readState != null and readState.length()>0">read_state = #{readState},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="delTeamMemberByTid" parameterType="string">
+		delete from
+		team_member where tid = #{tid}
+	</delete>
+	
+	<delete id="delTeamByTid" parameterType="string">
+		delete from
+		team where tid = #{tid}
+	</delete>
+	
+	<delete id="delTeamRelationshiByTid" parameterType="string">
+		delete from
+		team_relationship where tid = #{tid}
+	</delete>
+	
+	<update id="modifyTeamMember" parameterType="map">
+		update team_member set is_mute = #{isMute}
+		<where>
+		    <if test="tid != null and tid.length()>0">and tid = #{tid}</if>
+		    <if test="type != null and type.length()>0">and type = #{type}</if>
+		    <if test="account != null and account.length()>0">and account = #{account}</if>
+		</where>
+	</update>
+
+</mapper>

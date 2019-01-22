@@ -1,0 +1,154 @@
+header {
+    width: 100%;
+    height: 80px;
+    background-color:#fff;
+    h3 {
+        color: #00BFFF;
+        width: calc(~"(4em + 80px)");
+        float:left;
+        line-height: 80px;
+        img {
+            width: 60px;
+            height: 60px;
+            float: left;
+            margin-top: 10px;
+        }
+    }
+    #content{
+    	float:left;
+    	margin-left:2em;
+    	height:40px;
+    	width:400px;
+    	margin-top:20px;
+    	padding-left:2em;
+    	border: 1px solid #aaa;
+    	border-right:none;
+    }
+    #content:focus{
+    	border: 1px solid #00BFFF;
+    	border-right:none;
+    	outline: none;
+    }
+    i{
+    	width:8px;
+    	height:8px;
+    	position:absolute;
+    	top: 31px;
+    	left: 188px;
+    }
+    #btnSearch{
+    	clear:both;
+    	display:inline-block;
+    	width:6em;
+    	height:40px;
+    	margin-top:20px;
+    	line-height: 40px;
+    	text-align:center;
+    	border-left:none;
+    	cursor: pointer;
+    	background-color:#00BFFF;
+    	color:#fff;
+    }
+    ul{
+	    width: 398px;
+    	height: 120px;
+    	position:absolute;
+    	top:60px;
+    	left:181px;
+    	background-color:#fff;
+    	border:1px solid #aaa;
+    	border-top:none;
+    	display:none;
+    	z-index:10000;
+    	li{
+    		line-height:30px;
+    		margin-left:1em;
+    		label{
+    			margin-left:5px;
+    		}
+    	}
+    	
+    }
+}
+
+#data{
+	margin-top:20px;
+	ul{
+		margin:auto;
+		position:relative;
+		.text,.voice{
+			height:270px;
+		}
+		.video,.image{
+			height:400px;
+		}
+		li{
+			width:30%;
+			float:left;
+			background-color:#fff;
+			margin: 10px 0 0 2.5%;
+			box-shadow:0 0 20px rgba(0,0,0,.2);
+			cursor:pointer;
+			h3{
+				height: 30px;
+				text-align: center;
+				margin-bottom:10px;
+				span{
+					display: inline-block;
+					width: 5em;
+					height: 30px;
+					line-height: 30px;
+					background-color: #00BFFF;
+					color: #FFFFFF;
+					border-radius: 2px;
+				}
+			}
+			p{
+				width: calc(~"(100% - 4em)");
+				line-height:25px;
+				margin-left:2em;
+				word-wrap:break-word;  
+			    word-break:break-all;  
+			    overflow: hidden;
+			    text-align:center;
+			    span{
+			    	display:block;
+			    	white-space: nowrap; 
+					overflow: hidden;
+					text-overflow:ellipsis;
+			    }
+			    .title{
+			    	color:#333;
+			    	font-size:16px;
+			    }
+			    .content{
+			    	color:#666;
+			    	font-size:14px;
+			    	position:relative£»
+			    	.toast{
+			    		background:#00BFFF;
+			    		padding:0 5px;
+			    		border-radius: 2px;
+			    		text-align:right;
+				    	position:absolute;
+				    	top:0;
+				    	right:0;
+				    }
+			    }
+			    img{
+			    	height:150px;
+			    	margin-top:10px;
+			    }
+			}
+			 .videoShow{
+			 	margin-top:10px;
+		    	height:150px;
+		    	width:100%;
+		    	video{
+		    		height:100%;
+		    		width:100%;
+		    	}
+		    }
+		}
+	}
+}

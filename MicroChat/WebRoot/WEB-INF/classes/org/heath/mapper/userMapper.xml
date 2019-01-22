@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.heath.mapper.UserMapper">
+
+	<resultMap type="user" id="userHashMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="bindMobile" column="bind_mobile" />
+		<result property="token" column="token" />
+		<result property="password" column="password" />
+		<result property="registerTime" column="register_time" />
+		<result property="state" column="state" />
+		<result property="prohibitionTime" column="prohibition_time" />
+	</resultMap>
+	
+	<resultMap type="map" id="userinfoLazyLoadingMap">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="nickname" column="nickname" />
+		<result property="sign" column="sign" />
+		<result property="icon" column="icon" />
+		<result property="gender" column="gender" />
+		<result property="ex" column="ex" />
+		<association property="state" javaType="string"
+			select="org.heath.mapper.UserMapper.queryUserBan" column="account" />
+		<association property="dynamicNum" javaType="string"
+			select="org.heath.mapper.DynamicMapper.queryDynamicNums1" column="account" />
+		<association property="followNum" javaType="string"
+			select="org.heath.mapper.DynamicMapper.queryFollowNums"
+			column="account" />
+	</resultMap>
+
+	<insert id="register" parameterType="user">
+		insert into
+		user(account,bind_mobile,token,password,register_time,state,prohibition_time)
+		values(#{account},#{bindMobile},#{token},md5(#{password}),now(),"1",null)
+	</insert>
+
+	<insert id="addUserinfo" parameterType="String">
+		insert into
+		userinfo(account,nickname)
+		values(#{account},#{account})
+	</insert>
+
+	<select id="checkRegister" parameterType="String" resultType="int">
+		select count(*) from user where bind_mobile = #{bindMobile}
+	</select>
+
+	<select id="checkAccount" parameterType="String" resultType="int">
+		select count(*) from user where account = #{account}
+	</select>
+
+	<select id="login" parameterType="user" resultMap="userHashMap">
+		select * from
+		user where (account = #{account} or bind_mobile = #{account})
+		and
+		password = md5(#{password})
+	</select>
+
+	<update id="resetProhibition" parameterType="String">
+		update user set
+		state=1,prohibition_time=null where account = #{account} or
+		bind_mobile = #{account}
+	</update>
+
+	<select id="queryMyInfo" parameterType="String" resultType="userInfo">
+		select * from userinfo where account = #{account}
+	</select>
+
+	<select id="queryTeamUserInfo" parameterType="map" resultType="userInfo">
+		select * from userinfo where
+		<if test="type != null and type.equals('inviter')">
+			account = #{inviter}
+		</if>
+		<if test="type != null and type.equals('apply')">
+			account = #{beinviter}
+		</if>
+	</select>
+
+	<select id="queryUsersInfo" parameterType="String" resultType="userInfo">
+		select * from userinfo where account in
+		<foreach collection="list" index="index" item="account" open="("
+			separator="," close=")">
+			#{account}
+		</foreach>
+	</select>
+
+	<update id="modifyMyInfo" parameterType="userInfo">
+		update userinfo
+		<set>
+			<if test="icon != null and icon.length()>0">icon = #{icon},</if>
+			<if test="sign != null and sign.length()>0">sign = #{sign},</if>
+			<if test="email != null and email.length()>0">email = #{email},</if>
+			<if test="birth != null and birth.length()>0">birth = #{birth},</if>
+			<if test="mobile != null and mobile.length()>0">mobile = #{mobile},</if>
+			<if test="gender != null and gender.length()>0">gender = #{gender},</if>
+			<if test="nickname != null and nickname.length()>0">nickname = #{nickname},</if>
+			<if test="ex != null and ex.length()>0">ex = #{ex},</if>
+		</set>
+		where account = #{account}
+	</update>
+
+	<update id="resetPassword" parameterType="user">
+		update user set
+		password=md5(#{password}) where bind_mobile = #{bindMobile}
+		or account
+		= #{bindMobile}
+	</update>
+
+	<update id="modifyPassword" parameterType="map">
+		update user set
+		password=md5(#{newPassword}) where (account = #{account} or bind_mobile = #{account}) and
+		password=md5(#{password})
+	</update>
+
+	<update id="accountBan" parameterType="user">
+		update user set
+		state=#{state},prohibition_time=#{prohibitionTime} where
+		account =
+		#{account} or bind_mobile = #{account}
+	</update>
+
+	<select id="queryEveryMonthRegisterNum" parameterType="int"
+		resultType="map">
+		select count(*) as count,month(register_time) as month from
+		user where year
+		(register_time)=#{year} group by month
+	</select>
+	
+	<select id="queryUserBan" parameterType="string" resultType="string">
+	    select state from user where account=#{account}
+	</select>
+	
+	<select id="queryUserNum" resultType="int">
+	    select count(id) from user
+	</select>
+	
+	<select id="queryUserinfo" parameterType="map" resultMap="userinfoLazyLoadingMap">
+	    select * from userinfo order by id desc limit ${start},${pageSize}
+	</select>
+
+</mapper>
