@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/deepskyblue">
+
+        <LinearLayout
+            android:id="@+id/ll_return"
+            android:layout_width="44sp"
+            android:layout_height="44sp"
+            android:gravity="center_vertical"
+            >
+
+            <ImageView
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:src="@drawable/return1"
+                android:layout_marginStart="20dp"
+                android:contentDescription="@string/tv_icon_des"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:layout_marginStart="20dp"
+            android:layout_centerVertical="true"
+            />
+
+        <ImageView
+            android:id="@+id/iv_user_info"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/menu"
+            android:layout_marginEnd="20dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/tv_icon_des"
+            />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_message"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:divider="@color/white"
+        android:layout_weight="1">
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/border"
+        >
+
+        <ImageView
+            android:id="@+id/iv_keyboard"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="7dp"
+            android:src="@drawable/keyboard"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_voice"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="7dp"
+            android:src="@drawable/voice"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            />
+
+        <heath.com.microchat.message.AudioRecorderButton
+            android:id="@+id/btn_say"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:text="@string/tv_say_recorder_normal"
+            android:gravity="center"
+            android:background="@drawable/shape_recorder_normal"
+            android:layout_marginTop="7dp"
+            android:textColor="@color/black2"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <EditText
+            android:id="@+id/et_message_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:theme="@style/MyEditText"
+            android:inputType="text"
+            android:textColorHint="@color/gainsboro"
+            android:textColor="@color/black2"
+            android:paddingStart="8dp"
+            android:paddingEnd="0dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/iv_brow"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="7dp"
+            android:src="@drawable/brow"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_send_add"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="7dp"
+            android:src="@drawable/send_add"
+            android:layout_marginEnd="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="50dp"
+            android:layout_height="36dp"
+            android:text="@string/btn_send"
+            android:background="@color/deepskyblue"
+            android:textColor="@color/white"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gv_function"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:columnWidth="80dp"
+        android:stretchMode="spacingWidthUniform"
+        android:gravity="center"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

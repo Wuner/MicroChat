@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/deepskyblue">
+
+            <LinearLayout
+                android:id="@+id/ll_return"
+                android:layout_width="44sp"
+                android:layout_height="44sp"
+                android:gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:layout_width="24sp"
+                    android:layout_height="24sp"
+                    android:src="@drawable/return1"
+                    android:layout_marginStart="20dp"
+                    android:contentDescription="@string/tv_icon_des"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_create_team"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            >
+
+            <ImageView
+                android:id="@+id/iv_add_team_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/add_team_icon"
+                android:layout_marginTop="100dp"
+                android:contentDescription="@string/tv_icon"
+                />
+
+            <heath.com.microchat.utils.ClearEditText
+                android:id="@+id/et_team_name"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:hint="@string/et_team_name_hint"
+                android:inputType="text"
+                android:textColor="@color/black2"
+                android:textColorHint="@color/gray"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:theme="@style/MyEditText" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/deepskyblue"
+                android:text="@string/btn_submit"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_label_clarity_black">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/pb_loading"
+            style="@style/SpinKitView.Large.Circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:SpinKit_Color="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_loading_text"
+            android:layout_below="@id/pb_loading"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            />
+
+    </RelativeLayout>
+
+</FrameLayout>
+

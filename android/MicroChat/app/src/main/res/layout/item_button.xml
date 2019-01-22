@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/shape_label_white"
+    android:textColor="@color/deepskyblue"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:text="@string/tv_icon_des"
+    android:textStyle="bold" />
