@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.heath.recruit.utils.ThreadUtils;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
@@ -32,6 +31,7 @@ import heath.com.microchat.service.ITeamService;
 import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.DividerItemDecoration;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class TeamActivity extends BaseActivity implements View.OnClickListener {
 
@@ -133,7 +133,7 @@ public class TeamActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void queryTeamNoticeNums() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {

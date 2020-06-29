@@ -31,6 +31,7 @@ import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class TeamMemberInfoActivity extends BaseActivity implements View.OnClickListener {
@@ -211,7 +212,7 @@ public class TeamMemberInfoActivity extends BaseActivity implements View.OnClick
 
     private HashMap<String, Object> get(final String account) {
         final HashMap<String, Object> listmap = new HashMap<>();
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {

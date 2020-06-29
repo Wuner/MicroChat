@@ -59,9 +59,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.2.4'
     implementation files('libs/httpmime-4.1.2.jar')
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
-    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     //华为推送
-    implementation 'com.huawei.android.hms:push:2.6.1.301'
+    implementation 'com.huawei.hms:push:4.0.4.301'
     //添加开关按钮控件
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     //滑动返回

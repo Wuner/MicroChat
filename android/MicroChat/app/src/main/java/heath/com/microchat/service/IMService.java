@@ -54,6 +54,7 @@ import heath.com.microchat.provider.MicroChatProvider;
 import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.Common;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class IMService extends Service {
 
@@ -248,7 +249,7 @@ public class IMService extends Service {
                         }
                     }
                     final TabHostActivity tabHostActivity = new TabHostActivity();
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             final Cursor cc = getContentResolver().query(MicroChatProvider.URI_ALL_COUNT, null, null, null, null);
@@ -328,7 +329,7 @@ public class IMService extends Service {
     };
 
     private void loadingFriends() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -340,7 +341,7 @@ public class IMService extends Service {
                     }.getType());
                     updateFriends(friendBeans);
                     updateUserInfos(friendBeans);
-                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                    ThreadUtils.runInUIThread(new Runnable() {
                         @Override
                         public void run() {
                             FriendsFragment.updateData(aCache.getAsString("account"));

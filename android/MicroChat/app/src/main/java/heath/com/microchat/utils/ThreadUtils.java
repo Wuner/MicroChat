@@ -1,4 +1,4 @@
-package com.heath.recruit.utils;
+package heath.com.microchat.utils;
 
 import android.os.Handler;
 

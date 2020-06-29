@@ -20,6 +20,7 @@ import heath.com.microchat.entity.TeamRelationship;
 import heath.com.microchat.friend.FriendsFragment;
 import heath.com.microchat.service.ITeamService;
 import heath.com.microchat.service.impl.TeamServiceImpl;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class TeamNoticeProcessingResultActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout mLlReturn;
@@ -65,7 +66,7 @@ public class TeamNoticeProcessingResultActivity extends BaseActivity implements 
             mTvResult.setText(getResources().getString(R.string.tv_result_error2));
         }
         if (teamRelationship.getReadState().equals("0")){
-            com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+            ThreadUtils.runInThread(new Runnable() {
                 @Override
                 public void run() {
                     TeamRelationship teamRelationship1 = new TeamRelationship();

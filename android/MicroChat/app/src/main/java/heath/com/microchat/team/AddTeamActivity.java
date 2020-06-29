@@ -29,6 +29,7 @@ import heath.com.microchat.service.ITeamService;
 import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.DividerItemDecoration;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class AddTeamActivity extends BaseActivity implements View.OnClickListener {
@@ -101,11 +102,11 @@ public class AddTeamActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void loadTeamsList(final String s) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 processingData(s);
-                com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                ThreadUtils.runInUIThread(new Runnable() {
                     @Override
                     public void run() {
                         addTeamAdapter = new AddTeamAdapter(AddTeamActivity.this, listdata);

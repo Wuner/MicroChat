@@ -32,6 +32,7 @@ import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.BottomMenu;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class TeamManageActivity extends BaseActivity implements View.OnClickListener {
@@ -300,7 +301,7 @@ public class TeamManageActivity extends BaseActivity implements View.OnClickList
     };
 
     private void mute(final int muteType) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -325,7 +326,7 @@ public class TeamManageActivity extends BaseActivity implements View.OnClickList
     }
 
     private void modify(final int type, final String select) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {

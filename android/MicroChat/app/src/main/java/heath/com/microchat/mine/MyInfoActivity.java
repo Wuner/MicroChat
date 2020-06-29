@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
@@ -29,7 +28,6 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,15 +36,14 @@ import java.util.Map;
 import heath.com.microchat.BaseActivity;
 import heath.com.microchat.R;
 import heath.com.microchat.entity.UserInfo;
-import heath.com.microchat.friend.FriendsNoticeProcessedActivity;
 import heath.com.microchat.service.IUserService;
 import heath.com.microchat.service.impl.UserServiceImpl;
-import heath.com.microchat.team.TeamManageActivity;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.BottomMenu;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 import heath.com.microchat.utils.UploadServerUtils;
 
@@ -260,7 +257,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             c.moveToFirst();
             int columnIndex = c.getColumnIndex(filePathColumns[0]);
             final String imagePath = c.getString(columnIndex);
-            com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+            ThreadUtils.runInThread(new Runnable() {
                 @Override
                 public void run() {
                     final String resultPath = UploadServerUtils.uploadLogFile(Common.HTTP_ADDRESS + "upload/fileUpload.action", imagePath, Common.USER_FOLDER_PATH);
@@ -317,7 +314,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             switch (v.getId()) {
                 case R.id.btn1:
                     loadingUtils.show();
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -343,7 +340,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     break;
                 case R.id.btn2:
                     loadingUtils.show();
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -379,7 +376,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onTimeSelect(final Date date, View v) {
                 loadingUtils.show();
-                com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                ThreadUtils.runInThread(new Runnable() {
                     @Override
                     public void run() {
                         JSONObject parameterData = new JSONObject();

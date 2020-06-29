@@ -33,6 +33,7 @@ import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 import heath.com.microchat.utils.UploadServerUtils;
 
@@ -138,7 +139,7 @@ public class EditTeamInfoActivity extends BaseActivity implements View.OnClickLi
             c.moveToFirst();
             int columnIndex = c.getColumnIndex(filePathColumns[0]);
             final String imagePath = c.getString(columnIndex);
-            com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+            ThreadUtils.runInThread(new Runnable() {
                 @Override
                 public void run() {
                     final String resultPath = UploadServerUtils.uploadLogFile(Common.HTTP_ADDRESS + "upload/fileUpload.action", imagePath, Common.TEAM_FOLDER_PATH);

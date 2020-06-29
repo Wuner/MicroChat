@@ -27,6 +27,7 @@ import heath.com.microchat.entity.TeamRelationship;
 import heath.com.microchat.service.ITeamService;
 import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.ClearEditText;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class ReqJoinTeamActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout mLlReturn;
@@ -93,7 +94,7 @@ public class ReqJoinTeamActivity extends BaseActivity implements View.OnClickLis
                 NIMClient.getService(TeamService.class).applyJoinTeam(team.getId(), postscript).setCallback(new RequestCallback<Team>() {
                     @Override
                     public void onSuccess(final Team team) {
-                        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                        ThreadUtils.runInThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -125,7 +126,7 @@ public class ReqJoinTeamActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onFailed(int code) {
                         if (code==808){
-                            com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                            ThreadUtils.runInThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     try {

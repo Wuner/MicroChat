@@ -29,6 +29,7 @@ import heath.com.microchat.service.ITeamService;
 import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.DividerItemDecoration;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class TeamNoticeActivity extends BaseActivity {
     private RecyclerView mRvTeamNotice;
@@ -79,7 +80,7 @@ public class TeamNoticeActivity extends BaseActivity {
     }
 
     private void requestData() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -90,7 +91,7 @@ public class TeamNoticeActivity extends BaseActivity {
                     if (resultObj.getString("code").equals("200")) {
                         teamRelationships = gson.fromJson(resultObj.getJSONArray("teamRelationships").toString(), new TypeToken<List<TeamRelationship>>() {
                         }.getType());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 teamNoticeAdapter = new TeamNoticeAdapter(TeamNoticeActivity.this, teamRelationships);

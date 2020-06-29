@@ -37,7 +37,7 @@ public class ImageUitl {
 	}
 
 	public static void setImageBitmap(final String url,final ImageView iv) {
-		com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+		ThreadUtils.runInThread(new Runnable() {
 			@Override
 			public void run() {
 				DefaultHttpClient httpclient = new DefaultHttpClient();

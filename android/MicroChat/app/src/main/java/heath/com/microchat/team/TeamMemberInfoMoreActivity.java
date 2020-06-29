@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.heath.recruit.utils.ThreadUtils;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
@@ -36,10 +35,9 @@ import heath.com.microchat.R;
 import heath.com.microchat.service.ITeamService;
 import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.TimeUtils;
 import heath.com.microchat.utils.ToastUtil;
-
-import static heath.com.microchat.team.TeamInfoActivity.getTeamInfo;
 
 public class TeamMemberInfoMoreActivity extends BaseActivity implements View.OnClickListener {
 
@@ -154,7 +152,7 @@ public class TeamMemberInfoMoreActivity extends BaseActivity implements View.OnC
     }
 
     private void setMute(final int mute){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {

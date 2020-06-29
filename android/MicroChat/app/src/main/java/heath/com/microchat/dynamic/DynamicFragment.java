@@ -53,6 +53,7 @@ import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.DividerItemDecoration;
 import heath.com.microchat.utils.OnReboundListener;
 import heath.com.microchat.utils.OnRecyclerViewScrollListener;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class DynamicFragment extends Fragment implements View.OnClickListener {
@@ -495,7 +496,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setDynamicMineData(){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+       ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -512,7 +513,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         BaseActivity.aCache.put(MSID, dynamics.get(0).getId());
                         BaseActivity.aCache.put(MEID, dynamics.get(dynamics.size() - 1).getId());
                         Log.i("动态数据", "run: " + result);
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 initDynamicAdapterMine();
@@ -532,7 +533,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setDynamicFriendData(){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -550,7 +551,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         BaseActivity.aCache.put(FRSID, friendDynamics.get(0).getId());
                         BaseActivity.aCache.put(FREID, friendDynamics.get(friendDynamics.size() - 1).getId());
                         Log.i("动态数据", "run: " + result);
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 initDynamicAdapterFriend();
@@ -570,7 +571,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setDynamicImageTextData(){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -587,7 +588,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         BaseActivity.aCache.put(ITSID, imageTextDynamics.get(0).getId());
                         BaseActivity.aCache.put(ITEID, imageTextDynamics.get(imageTextDynamics.size() - 1).getId());
                         Log.i("动态数据", "run: " + result);
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 initDynamicAdapterImageText();
@@ -607,7 +608,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setDynamicFollowData(){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -624,7 +625,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         BaseActivity.aCache.put(FOSID, followDynamics.get(0).getId());
                         BaseActivity.aCache.put(FOEID, followDynamics.get(followDynamics.size() - 1).getId());
                         Log.i("动态数据", "run: " + result);
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 initDynamicAdapterFollow();
@@ -644,7 +645,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setDynamicVideoData(){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -661,7 +662,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         BaseActivity.aCache.put(VSID, videoDynamics.get(0).getId());
                         BaseActivity.aCache.put(VEID, videoDynamics.get(videoDynamics.size() - 1).getId());
                         Log.i("动态数据", "run: " + result);
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 initDynamicAdapterVideo();
@@ -681,7 +682,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadDynamicVideo() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -699,7 +700,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(VEID, dynamicsTemp.get(dynamicsTemp.size() - 1).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (videoDynamics.size() == 0) {
@@ -724,7 +725,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void refreshDynamicVideo() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -742,7 +743,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(VSID, dynamicsTemp.get(0).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (videoDynamics.size() == 0) {
@@ -767,7 +768,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadDynamicFollow() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -785,7 +786,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(FOEID, dynamicsTemp.get(dynamicsTemp.size() - 1).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (followDynamics.size() == 0) {
@@ -810,7 +811,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void refreshDynamicFollow() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -828,7 +829,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(FOSID, dynamicsTemp.get(0).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (followDynamics.size() == 0) {
@@ -853,7 +854,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadDynamicImageText() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -871,7 +872,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(ITEID, dynamicsTemp.get(dynamicsTemp.size() - 1).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (imageTextDynamics.size() == 0) {
@@ -896,7 +897,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void refreshDynamicImageText() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -914,7 +915,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(ITSID, dynamicsTemp.get(0).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (imageTextDynamics.size() == 0) {
@@ -939,7 +940,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadDynamicFriend() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -957,7 +958,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(FREID, dynamicsTemp.get(dynamicsTemp.size() - 1).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (friendDynamics.size() == 0) {
@@ -982,7 +983,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void refreshDynamicFriend() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -1000,7 +1001,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(FRSID, dynamicsTemp.get(0).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (friendDynamics.size() == 0) {
@@ -1025,7 +1026,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadDynamicMine() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -1043,7 +1044,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(MEID, dynamicsTemp.get(dynamicsTemp.size() - 1).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (dynamics.size() == 0) {
@@ -1068,7 +1069,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
     }
 
     private void refreshDynamicMine() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -1086,7 +1087,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                         }
                         BaseActivity.aCache.put(MSID, dynamicsTemp.get(0).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -1155,7 +1156,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
             mAdapter.setOnOtherClickListener(new DynamicAdapter.OnOtherClickListener() {
                 @Override
                 public void onPraiseClick(View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1166,7 +1167,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 JSONObject resultObj = new JSONObject(result);
                                 if (resultObj.get("code").equals("200")) {
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapter.updateData(position, dynamicBean);
@@ -1188,7 +1189,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onSendClick(final View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1214,7 +1215,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 if (resultObj.get("code").equals("200")) {
                                     updateData();
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapter.updateData(position, dynamicBean);
@@ -1288,7 +1289,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
             mAdapterFriend.setOnOtherClickListener(new DynamicAdapter.OnOtherClickListener() {
                 @Override
                 public void onPraiseClick(View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1299,7 +1300,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 JSONObject resultObj = new JSONObject(result);
                                 if (resultObj.get("code").equals("200")) {
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapterFriend.updateData(position, dynamicBean);
@@ -1321,7 +1322,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onSendClick(final View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1347,7 +1348,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 if (resultObj.get("code").equals("200")) {
                                     updateData();
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapterFriend.updateData(position, dynamicBean);
@@ -1421,7 +1422,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
             mAdapterImageText.setOnOtherClickListener(new DynamicAdapter.OnOtherClickListener() {
                 @Override
                 public void onPraiseClick(View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1432,7 +1433,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 JSONObject resultObj = new JSONObject(result);
                                 if (resultObj.get("code").equals("200")) {
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapterImageText.updateData(position, dynamicBean);
@@ -1454,7 +1455,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onSendClick(final View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1480,7 +1481,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 if (resultObj.get("code").equals("200")) {
                                     updateData();
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapterImageText.updateData(position, dynamicBean);
@@ -1553,7 +1554,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
             mAdapterFollow.setOnOtherClickListener(new DynamicAdapter.OnOtherClickListener() {
                 @Override
                 public void onPraiseClick(View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1564,7 +1565,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 JSONObject resultObj = new JSONObject(result);
                                 if (resultObj.get("code").equals("200")) {
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapterFollow.updateData(position, dynamicBean);
@@ -1586,7 +1587,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onSendClick(final View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1612,7 +1613,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 if (resultObj.get("code").equals("200")) {
                                     updateData();
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapterFollow.updateData(position, dynamicBean);
@@ -1654,7 +1655,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
             mAdapterVideo.setOnOtherClickListener(new DynamicVideoAdapter.OnOtherClickListener() {
                 @Override
                 public void onPraiseClick(View view, final int position) {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             JSONObject parameterData = new JSONObject();
@@ -1665,7 +1666,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener {
                                 JSONObject resultObj = new JSONObject(result);
                                 if (resultObj.get("code").equals("200")) {
                                     final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                    com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                    ThreadUtils.runInUIThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             mAdapterVideo.updateData(position, dynamicBean);

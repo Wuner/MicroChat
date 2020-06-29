@@ -27,6 +27,7 @@ import heath.com.microchat.service.ITeamService;
 import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 import heath.com.microchat.utils.UploadServerUtils;
 
@@ -94,7 +95,7 @@ public class CreateTeamActivity extends BaseActivity implements View.OnClickList
                     loadingUtils.dismiss();
                     return;
                 } else {
-                    com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                    ThreadUtils.runInThread(new Runnable() {
                         @Override
                         public void run() {
                             try {

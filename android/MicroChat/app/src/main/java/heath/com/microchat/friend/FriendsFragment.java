@@ -42,6 +42,7 @@ import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.team.TeamActivity;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.DividerItemDecoration;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class FriendsFragment extends Fragment implements View.OnClickListener {
 
@@ -111,7 +112,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     }
 
     public static void queryReqAddNums(final String account) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -135,7 +136,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     }
 
     public static void queryTeamNoticeNums(final String account) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -158,7 +159,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         });
     }
     private void updateFriends1(final String account) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -288,12 +289,12 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadFriendsList(final String account) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 processingData(account);
                 Log.e("TAG", "json数组---------: " + listdata.toString() + "-----------------------------------------------------------");
-                com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                ThreadUtils.runInUIThread(new Runnable() {
                     @Override
                     public void run() {
                         friendAdapter = new FriendAdapter(getActivity(), listdata);

@@ -1,7 +1,6 @@
 package heath.com.microchat.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -31,7 +30,7 @@ import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
-import heath.com.microchat.utils.ToastUtil;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class FriendsNoticeAdapter extends BaseAdapter {
 
@@ -181,7 +180,7 @@ public class FriendsNoticeAdapter extends BaseAdapter {
     }
 
     private void modifyState(final String fromAccount, final String state) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {

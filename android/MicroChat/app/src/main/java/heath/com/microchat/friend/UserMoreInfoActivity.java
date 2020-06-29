@@ -32,6 +32,7 @@ import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.utils.BottomMenu;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class UserMoreInfoActivity extends BaseActivity implements View.OnClickListener {
@@ -129,7 +130,7 @@ public class UserMoreInfoActivity extends BaseActivity implements View.OnClickLi
                 .setCallback(new RequestCallback<Void>() {
                     @Override
                     public void onSuccess(Void param) {
-                        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                        ThreadUtils.runInThread(new Runnable() {
                             @Override
                             public void run() {
                                 JSONObject parameterData = new JSONObject();

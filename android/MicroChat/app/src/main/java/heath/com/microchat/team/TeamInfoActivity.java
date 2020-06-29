@@ -25,7 +25,6 @@ import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.NormalDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.heath.recruit.utils.ThreadUtils;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
@@ -55,6 +54,7 @@ import heath.com.microchat.service.impl.UserServiceImpl;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 import heath.com.microchat.utils.UploadServerUtils;
 

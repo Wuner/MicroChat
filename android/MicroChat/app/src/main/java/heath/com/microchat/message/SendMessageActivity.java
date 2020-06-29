@@ -31,7 +31,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.heath.recruit.utils.ThreadUtils;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.msg.MessageBuilder;
@@ -65,6 +64,7 @@ import heath.com.microchat.service.IMService;
 import heath.com.microchat.service.IMessageService;
 import heath.com.microchat.service.impl.MessageServiceImpl;
 import heath.com.microchat.utils.Common;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 import heath.com.microchat.utils.UploadServerUtils;
 

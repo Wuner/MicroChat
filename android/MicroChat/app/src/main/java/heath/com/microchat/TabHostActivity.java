@@ -56,6 +56,7 @@ import heath.com.microchat.team.AddTeamActivity;
 import heath.com.microchat.team.CreateTeamActivity;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class TabHostActivity extends BaseActivity implements View.OnClickListener {
     /**
@@ -348,7 +349,7 @@ public class TabHostActivity extends BaseActivity implements View.OnClickListene
 
     public static void queryReqAddNums() {
         final String account = aCache.getAsString("account");
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -377,7 +378,7 @@ public class TabHostActivity extends BaseActivity implements View.OnClickListene
     }
 
     public static void queryMessageCount() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 final Cursor cc = context.getContentResolver().query(MicroChatProvider.URI_ALL_COUNT, null, null, null, null);

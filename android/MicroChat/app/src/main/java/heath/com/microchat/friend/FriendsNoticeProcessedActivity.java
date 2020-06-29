@@ -26,6 +26,7 @@ import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class FriendsNoticeProcessedActivity extends BaseActivity implements View.OnClickListener {
@@ -201,7 +202,7 @@ public class FriendsNoticeProcessedActivity extends BaseActivity implements View
     }
 
     private void modifyState(final String fromAccount, final String state) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 try {

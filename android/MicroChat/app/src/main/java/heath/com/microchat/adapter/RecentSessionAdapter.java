@@ -20,6 +20,7 @@ import heath.com.microchat.entity.TeamBean;
 import heath.com.microchat.provider.MicroChatProvider;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.TimeUtils;
 
 public class RecentSessionAdapter extends BaseAdapter {
@@ -89,7 +90,7 @@ public class RecentSessionAdapter extends BaseAdapter {
             holder.mTvContent.setText(listdata.get(position).get("content").toString());
         }
         if (Common.SESSION_TYPE_P2P.equals(listdata.get(position).get("sessionType").toString())){
-            com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+           ThreadUtils.runInThread(new Runnable() {
                 @Override
                 public void run() {
                     final Cursor cc;
@@ -124,7 +125,7 @@ public class RecentSessionAdapter extends BaseAdapter {
             }
         }else if(Common.SESSION_TYPE_TEAM.equals(listdata.get(position).get("sessionType").toString())){
             final TeamBean teamBean = (TeamBean) listdata.get(position).get("team");
-            com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+            ThreadUtils.runInThread(new Runnable() {
                 @Override
                 public void run() {
                     final Cursor cc;

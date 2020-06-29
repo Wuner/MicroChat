@@ -40,6 +40,7 @@ import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.service.impl.UserServiceImpl;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class AddManageMemberActivity extends BaseActivity implements View.OnClickListener {
@@ -146,7 +147,7 @@ public class AddManageMemberActivity extends BaseActivity implements View.OnClic
                     }
                 }
                 Log.e("组员数量2", "run: " + memberList.length());
-                com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                ThreadUtils.runInThread(new Runnable() {
                     @Override
                     public void run() {
                         Log.e("组员数量", "run: " + memberList.length());
@@ -165,11 +166,11 @@ public class AddManageMemberActivity extends BaseActivity implements View.OnClic
                                 }.getType());
                                 contrastData = gson.fromJson(resultObj.getJSONArray("userInfos").toString(), new TypeToken<List<UserInfo>>() {
                                 }.getType());
-                                com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                ThreadUtils.runInUIThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         if (adapter != null) {
-                                            com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                            ThreadUtils.runInUIThread(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     List<UserInfo> userInfos = new ArrayList<>();
@@ -258,7 +259,7 @@ public class AddManageMemberActivity extends BaseActivity implements View.OnClic
     }
 
     private void modify(final String tid, final String account, final String text) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();

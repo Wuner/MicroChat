@@ -26,6 +26,7 @@ import heath.com.microchat.entity.UserInfo;
 import heath.com.microchat.service.IFriendService;
 import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class AddFriendsActivity extends BaseActivity implements View.OnClickListener {
@@ -97,11 +98,11 @@ public class AddFriendsActivity extends BaseActivity implements View.OnClickList
     }
 
     private void loadFriendsList(final String s) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 processingData(s);
-                com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                ThreadUtils.runInUIThread(new Runnable() {
                     @Override
                     public void run() {
                         searchAdapter = new AddFriendsAdapter(AddFriendsActivity.this, listdata, cache);

@@ -52,6 +52,7 @@ import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.Common;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class MessageFragment extends Fragment {
@@ -86,12 +87,12 @@ public class MessageFragment extends Fragment {
     }
 
     private void init(final List<HashMap<String, Object>> recents) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 final List<Map<String, Object>> listdata = processingData(recents);
                 listdata1 = listdata;
-                com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                ThreadUtils.runInUIThread(new Runnable() {
                     @Override
                     public void run() {
                         TabHostActivity.loadingUtils.dismissOnUiThread();

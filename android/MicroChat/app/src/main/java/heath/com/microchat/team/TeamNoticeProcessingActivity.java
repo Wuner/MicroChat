@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.heath.recruit.utils.ThreadUtils;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
@@ -27,6 +26,7 @@ import heath.com.microchat.utils.ClearEditText;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class TeamNoticeProcessingActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout mLlReturn;

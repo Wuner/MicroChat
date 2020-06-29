@@ -28,6 +28,7 @@ import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.ImageUitl;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class ReqAddFriendActivity extends BaseActivity implements View.OnClickListener {
 
@@ -97,7 +98,7 @@ public class ReqAddFriendActivity extends BaseActivity implements View.OnClickLi
                         .setCallback(new RequestCallback<Void>() {
                             @Override
                             public void onSuccess(Void param) {
-                                com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                                ThreadUtils.runInThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         try {

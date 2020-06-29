@@ -34,6 +34,7 @@ import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.service.impl.TeamServiceImpl;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class InvitationActivity extends BaseActivity implements View.OnClickListener {
@@ -123,7 +124,7 @@ public class InvitationActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.btn_invite:
                 loadingUtils.show();
-                com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                ThreadUtils.runInThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -159,12 +160,12 @@ public class InvitationActivity extends BaseActivity implements View.OnClickList
     }
 
     private void loadFriendsList(final String account) {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 processingData(account);
                 Log.e("邀请", "json数组---------: " + listdata.toString() + "-----------------------------------------------------------");
-                com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                ThreadUtils.runInUIThread(new Runnable() {
                     @Override
                     public void run() {
                         invitationFriendsAdapter = new InvitationFriendsAdapter(InvitationActivity.this, listdata, BaseActivity.cache);

@@ -45,6 +45,7 @@ import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.DividerItemDecoration;
 import heath.com.microchat.utils.ImageUitl;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class PersonalHomepageActivity extends BaseActivity implements View.OnClickListener {
@@ -169,7 +170,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
         if (map.get("account").equals(aCache.getAsString("account"))){
             mBtnFollow.setVisibility(View.GONE);
         }
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -182,7 +183,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
                         }.getType());
                         BaseActivity.aCache.put("mmeid", dynamics.get(dynamics.size() - 1).getId());
                         Log.i("动态数据", "run: " + result);
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -239,7 +240,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
                                     mAdapter.setOnOtherClickListener(new DynamicAdapter.OnOtherClickListener() {
                                         @Override
                                         public void onPraiseClick(View view, final int position) {
-                                            com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                                            ThreadUtils.runInThread(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     JSONObject parameterData = new JSONObject();
@@ -250,7 +251,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
                                                         JSONObject resultObj = new JSONObject(result);
                                                         if (resultObj.get("code").equals("200")) {
                                                             final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                                            com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                                            ThreadUtils.runInUIThread(new Runnable() {
                                                                 @Override
                                                                 public void run() {
                                                                     mAdapter.updateData(position, dynamicBean);
@@ -272,7 +273,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
 
                                         @Override
                                         public void onSendClick(final View view, final int position) {
-                                            com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                                            ThreadUtils.runInThread(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     JSONObject parameterData = new JSONObject();
@@ -298,7 +299,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
                                                         if (resultObj.get("code").equals("200")) {
                                                             updateData();
                                                             final DynamicBean dynamicBean = gson.fromJson(resultObj.getJSONObject("dynamic").toString(), DynamicBean.class);
-                                                            com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                                            ThreadUtils.runInUIThread(new Runnable() {
                                                                 @Override
                                                                 public void run() {
                                                                     mAdapter.updateData(position, dynamicBean);
@@ -347,7 +348,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
     }
 
     private void setData(){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -356,7 +357,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
                     String result = iDynamicService.queryDynamicNums(parameterData);
                     final JSONObject resultObj = new JSONObject(result);
                     if (resultObj.getString("code").equals("200")) {
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -384,7 +385,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
                 finish();
                 break;
             case R.id.btn_follow:
-                com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+                ThreadUtils.runInThread(new Runnable() {
                     @Override
                     public void run() {
                         JSONObject parameterData = new JSONObject();
@@ -394,7 +395,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
                             String result = iDynamicService.follow(parameterData);
                             final JSONObject resultObj = new JSONObject(result);
                             if (resultObj.getString("code").equals("200")) {
-                                com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                                ThreadUtils.runInUIThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         setData();
@@ -422,7 +423,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
     }
 
     private void RefreshAndLoad() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -440,7 +441,7 @@ public class PersonalHomepageActivity extends BaseActivity implements View.OnCli
                         }
                         BaseActivity.aCache.put("mmeid", dynamicsTemp.get(dynamicsTemp.size() - 1).getId());
                         Log.i("动态数据", "run: " + dynamicsTemp.toString());
-                        com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                        ThreadUtils.runInUIThread(new Runnable() {
                             @Override
                             public void run() {
                                 mAdapter.setData(dynamics.size() - 1, dynamicsTemp);

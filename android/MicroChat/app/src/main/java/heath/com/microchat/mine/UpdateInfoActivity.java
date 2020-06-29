@@ -34,6 +34,7 @@ import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.team.UpdateTeamMemberInfoActivity;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class UpdateInfoActivity extends BaseActivity implements View.OnClickListener {
@@ -145,7 +146,7 @@ public class UpdateInfoActivity extends BaseActivity implements View.OnClickList
     }
 
     private void modifyUserInfo(final String content){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();
@@ -217,7 +218,7 @@ public class UpdateInfoActivity extends BaseActivity implements View.OnClickList
     }
 
     private void modifyRemakes(final String content){
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 JSONObject parameterData = new JSONObject();

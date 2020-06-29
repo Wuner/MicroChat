@@ -16,7 +16,6 @@ import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.NormalDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.heath.recruit.utils.ThreadUtils;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
@@ -31,8 +30,6 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 
 import heath.com.microchat.db.MicroChatDB;
-import heath.com.microchat.db.MicroChatDB;
-import heath.com.microchat.db.MicroChatDB;
 import heath.com.microchat.entity.FriendBean;
 import heath.com.microchat.entity.UserInfo;
 import heath.com.microchat.service.IMService;
@@ -41,6 +38,7 @@ import heath.com.microchat.service.ServiceRulesException;
 import heath.com.microchat.service.impl.UserServiceImpl;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.Common;
+import heath.com.microchat.utils.ThreadUtils;
 
 public class SplashActivity extends BaseActivity {
 

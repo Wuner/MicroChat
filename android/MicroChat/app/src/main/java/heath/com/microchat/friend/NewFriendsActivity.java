@@ -23,6 +23,7 @@ import heath.com.microchat.service.impl.FriendServiceImpl;
 import heath.com.microchat.team.TeamInfoActivity;
 import heath.com.microchat.utils.ACache;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class NewFriendsActivity extends BaseActivity implements View.OnClickListener {
@@ -76,12 +77,12 @@ public class NewFriendsActivity extends BaseActivity implements View.OnClickList
     }
 
     private void loadFriendsList() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 processingData();
                 Log.e("TAG", "json数组: " + listdata.toString() + "-----------------------------------------------------------");
-                com.heath.recruit.utils.ThreadUtils.runInUIThread(new Runnable() {
+                ThreadUtils.runInUIThread(new Runnable() {
                     @Override
                     public void run() {
                         friendsNoticeAdapter = new FriendsNoticeAdapter(NewFriendsActivity.this, listdata, cache);

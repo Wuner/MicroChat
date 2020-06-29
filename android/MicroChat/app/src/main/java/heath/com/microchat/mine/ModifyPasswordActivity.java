@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.heath.recruit.utils.ThreadUtils;
 
 import org.json.JSONObject;
 
@@ -16,6 +15,7 @@ import heath.com.microchat.service.impl.UserServiceImpl;
 import heath.com.microchat.utils.ClearEditText;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.LoadingUtils;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 
 public class ModifyPasswordActivity extends BaseActivity implements View.OnClickListener {

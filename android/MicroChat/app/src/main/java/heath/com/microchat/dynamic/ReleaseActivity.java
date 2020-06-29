@@ -52,6 +52,7 @@ import heath.com.microchat.utils.BottomMenu;
 import heath.com.microchat.utils.Common;
 import heath.com.microchat.utils.LoadingUtils;
 import heath.com.microchat.utils.PicturePreviewActivity;
+import heath.com.microchat.utils.ThreadUtils;
 import heath.com.microchat.utils.ToastUtil;
 import heath.com.microchat.utils.UploadServerUtils;
 
@@ -264,7 +265,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void upload() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 String content = mEtContent.getText().toString();
@@ -305,7 +306,7 @@ public class ReleaseActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void uploadVideo() {
-        com.heath.recruit.utils.ThreadUtils.runInThread(new Runnable() {
+        ThreadUtils.runInThread(new Runnable() {
             @Override
             public void run() {
                 String content = mEtContent.getText().toString();
