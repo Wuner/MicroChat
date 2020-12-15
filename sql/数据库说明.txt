@@ -1,0 +1,2 @@
+采用MySQL数据库。
+数据库名：microchat
